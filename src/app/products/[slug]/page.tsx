@@ -163,6 +163,7 @@ const ProductDetailsPage = async ({ params }: ProductDetailsPageProps) => {
         </section>
 
         {/* Market Prices Table */}
+        {/* Market Prices Table */}
         <section className="mt-3 rounded-xl border border-[#e0e8e1] bg-[#fbfdfb] p-3 sm:p-4">
           <h2 className="mb-3 text-sm font-bold text-[#263128]">
             বাজারভিত্তিক আজকের দাম
@@ -186,32 +187,38 @@ const ProductDetailsPage = async ({ params }: ProductDetailsPageProps) => {
                 </thead>
 
                 <tbody>
-                  {markets.map((market, index) => {
-                    const average = (market.min + market.max) / 2;
+                  {[...markets]
+                    .sort((a, b) => (a.min + a.max) / 2 - (b.min + b.max) / 2)
+                    .map((market, index) => {
+                      const average = (market.min + market.max) / 2;
 
-                    return (
-                      <tr
-                        key={`${market.market}-${index}`}
-                        className="border-t border-[#e0e8e1] even:bg-[#f0f5f0]/70"
-                      >
-                        <td className="whitespace-nowrap px-3 py-3 font-medium text-[#263128]">
-                          {market.market}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-3 text-[#68736b]">
-                          {market.division}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-3 text-right">
-                          {formatPrice(market.min)}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-3 text-right">
-                          {formatPrice(market.max)}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-3 text-right font-semibold">
-                          {formatPrice(Math.round(average))}
-                        </td>
-                      </tr>
-                    );
-                  })}
+                      return (
+                        <tr
+                          key={`${market.market}-${index}`}
+                          className="border-t border-[#e0e8e1] even:bg-[#f0f5f0]/70"
+                        >
+                          <td className="whitespace-nowrap px-3 py-3 font-medium text-[#263128]">
+                            {market.market}
+                          </td>
+
+                          <td className="whitespace-nowrap px-3 py-3 text-[#68736b]">
+                            {market.division}
+                          </td>
+
+                          <td className="whitespace-nowrap px-3 py-3 text-right">
+                            {formatPrice(market.min)}
+                          </td>
+
+                          <td className="whitespace-nowrap px-3 py-3 text-right">
+                            {formatPrice(market.max)}
+                          </td>
+
+                          <td className="whitespace-nowrap px-3 py-3 text-right font-semibold">
+                            {formatPrice(Math.round(average))}
+                          </td>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </table>
             </div>

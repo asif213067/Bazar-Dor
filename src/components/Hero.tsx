@@ -1,6 +1,4 @@
-
 import Image from "next/image";
-import Link from "next/link";
 import TodayDate from "@/components/header/TodayDate";
 
 const Hero = () => {

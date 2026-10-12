@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import SortableProducts from "@/components/SortableProducts";
+
 import type { PriceItem } from "@/type/priceItems.type";
+import ProductList from "@/components/ProductList";
 
 const API_URL = "https://api.api-store.workers.dev/api/bazardor/products";
 
@@ -45,10 +46,8 @@ export default async function ProductsPage({
   searchParams,
 }: ProductsPageProps) {
   const { category: categorySlug } = await searchParams;
-
   const allProducts = await getProducts();
 
-  //Invalid category
   if (
     categorySlug &&
     allProducts.length > 0 &&
@@ -57,7 +56,6 @@ export default async function ProductsPage({
     notFound();
   }
 
-  // 2. আগের category filtering বজায় থাকবে।
   const products = categorySlug
     ? allProducts.filter((product) => product.category === categorySlug)
     : allProducts;
@@ -89,11 +87,10 @@ export default async function ProductsPage({
           </div>
         </section>
 
-        {/* Product cards and sorting */}
+        {/* Product count, sorting, and product cards */}
         {products.length > 0 ? (
-          <SortableProducts products={products} />
+          <ProductList products={products} />
         ) : (
-          /* Empty state */
           <section className="flex flex-col items-center rounded-xl border border-[#e0e8e1] bg-[#fbfdfb] px-4 py-10 text-center">
             <span className="text-3xl" aria-hidden="true">
               🛒
