@@ -18,14 +18,27 @@ const getNavItems = async (): Promise<NavItem[]> => {
     const data = await res.json();
 
     return Array.isArray(data) ? data : (data.data ?? []);
-  } catch (error) {
-    console.error("Error fetching categories:", error);
+  } catch{
     return [];
   }
 };
 
 const NavLinks = async () => {
   const navItems = await getNavItems();
+
+  // Fallback UI when the API fails or returns no categories
+  if (navItems.length === 0) {
+    return (
+      <nav
+        aria-label="Product categories"
+        className="flex h-10 items-center border-t border-gray-100 px-3"
+      >
+        <p className="text-xs text-gray-500" role="status">
+          ক্যাটাগরি এখন পাওয়া যাচ্ছে না।
+        </p>
+      </nav>
+    );
+  }
 
   return (
     <nav className="flex h-10 items-center gap-1 overflow-x-auto border-t border-gray-100 px-1 sm:gap-3 scrollbar-none [&::-webkit-scrollbar]:hidden">
@@ -44,6 +57,6 @@ const NavLinks = async () => {
       ))}
     </nav>
   );
-};
+};;
 
 export default NavLinks;

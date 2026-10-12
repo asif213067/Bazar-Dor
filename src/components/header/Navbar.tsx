@@ -1,8 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
-import React from "react";
+import React, { Suspense } from "react";
 import NavLinks from "./NavLinks";
 import TodayDate from "./TodayDate";
+import NavLinksSkeleton from "./NavLinksSkeleton";
 
 const Navbar = () => {
 
@@ -50,7 +51,9 @@ const Navbar = () => {
         </div>
 
         {/* Bottom Navigation */}
-        <NavLinks />
+        <Suspense fallback={<NavLinksSkeleton />}>
+          <NavLinks />
+        </Suspense>
       </div>
     </header>
   );
