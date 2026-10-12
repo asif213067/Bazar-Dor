@@ -1,58 +1,112 @@
+"use client";
 
-import { PriceItem } from "@/type/marqueeItems.type";
+import { useEffect, useMemo, useState } from "react";
+import type { PriceItem } from "@/type/priceItems.type";
+import type { SortOption } from "@/type/sort.type";
 import ProductPriceCard from "./ProductPriceCard";
+import SortControl from "@/components/SortControl";
 
-const getAllProducts = async (): Promise<PriceItem[]> => {
-  try {
-    const res = await fetch(
-      "https://api.api-store.workers.dev/api/bazardor/products",
-      {
-        next: { revalidate: 60 },
-      },
-    );
+const API_URL = "https://api.api-store.workers.dev/api/bazardor/products";
 
-    if (!res.ok) {
-      return [];
+export default function AllProducts() {
+  const [products, setProducts] = useState<PriceItem[]>([]);
+  const [sort, setSort] = useState<SortOption>("default");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function getAllProducts() {
+      try {
+        const response = await fetch(API_URL);
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch products");
+        }
+
+        const data: unknown = await response.json();
+
+        let result: unknown;
+
+        if (Array.isArray(data)) {
+          result = data;
+        } else if (
+          data !== null &&
+          typeof data === "object" &&
+          "data" in data
+        ) {
+          result = data.data;
+        } else {
+          result = [];
+        }
+
+        if (!Array.isArray(result)) {
+          result = [];
+        }
+
+        if (!cancelled) {
+          setProducts(result as PriceItem[]);
+        }
+      } catch {
+        if (!cancelled) {
+          setProducts([]);
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
     }
 
-    const data = await res.json();
+    void getAllProducts();
 
-    const products: unknown = Array.isArray(data)
-      ? data
-      : data.data;
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
-    if (!Array.isArray(products)) {
-      return [];
+  const sortedProducts = useMemo(() => {
+    const items = [...products];
+
+    if (sort === "low") {
+      items.sort((a, b) => a.today - b.today);
+    } else if (sort === "high") {
+      items.sort((a, b) => b.today - a.today);
     }
 
-    return products as PriceItem[];
-  } catch {
-    return [];
-  }
-};
-
-const AllProducts = async () => {
-  const products = await getAllProducts();
+    return items;
+  }, [products, sort]);
 
   return (
-    <section id="all-products" className="scroll-mt-6 mt-8">
-      {/* Section Heading */}
-      <div className="mb-4">
+    <section id="all-products" className="mt-8 scroll-mt-6">
+      {/* Section heading */}
+      <div>
         <h2 className="text-base font-extrabold tracking-tight text-[#263128]">
           সব পণ্য
         </h2>
-
-        <p className="mt-1 text-[11px] text-[#737b74]">
-          {products.length === 0
-            ? "পণ্যের তথ্য এই মুহূর্তে পাওয়া যাচ্ছে না।"
-            : `মোট ${products.length.toLocaleString("bn-BD")}টি পণ্য দেখানো হচ্ছে`}
-        </p>
       </div>
 
-      {/* Products Grid */}
-      {products.length > 0 ? (
+      {/* Product count and sorting on the same line */}
+      <div className="mb-4 flex items-center justify-between gap-2">
+        <p className="min-w-0 text-xs text-[#737b74]">
+          {loading
+            ? "পণ্যের তথ্য লোড হচ্ছে..."
+            : products.length === 0
+              ? "পণ্যের তথ্য পাওয়া যাচ্ছে না।"
+              : `মোট ${products.length.toLocaleString("bn-BD")}টি পণ্য দেখানো হচ্ছে`}
+        </p>
+
+        <SortControl value={sort} onChange={setSort} />
+      </div>
+
+      {/* Product cards */}
+      {loading ? (
+        <div className="py-8 text-center text-sm text-[#737b74]">
+          পণ্যের তথ্য লোড হচ্ছে...
+        </div>
+      ) : sortedProducts.length > 0 ? (
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {products.map((product) => (
+          {sortedProducts.map((product) => (
             <ProductPriceCard key={product.id} product={product} />
           ))}
         </div>
@@ -65,6 +119,4 @@ const AllProducts = async () => {
       )}
     </section>
   );
-};
-
-export default AllProducts;
+}

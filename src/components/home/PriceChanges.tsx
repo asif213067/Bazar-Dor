@@ -1,5 +1,4 @@
-
-import { PriceItem } from "@/type/marqueeItems.type";
+import { PriceItem } from "@/type/priceItems.type";
 import PriceChangeSection from "./PriceChangeSection";
 
 const getPrices = async (): Promise<PriceItem[]> => {
@@ -17,9 +16,7 @@ const getPrices = async (): Promise<PriceItem[]> => {
 
     const data = await res.json();
 
-    const products: unknown = Array.isArray(data)
-      ? data
-      : data.data;
+    const products: unknown = Array.isArray(data) ? data : data.data;
 
     if (!Array.isArray(products)) {
       return [];
@@ -58,8 +55,8 @@ const PriceChanges = async () => {
         title="আজ দাম বেড়েছে"
         direction="up"
         products={increasedProducts}
-          />
-          
+      />
+
       <PriceChangeSection
         title="আজ দাম কমেছে"
         direction="down"
@@ -70,4 +67,3 @@ const PriceChanges = async () => {
 };
 
 export default PriceChanges;
-

@@ -1,4 +1,4 @@
-import { PriceItem } from "@/type/marqueeItems.type";
+import { PriceItem } from "@/type/priceItems.type";
 import Link from "next/link";
 import Marquee from "react-fast-marquee";
 

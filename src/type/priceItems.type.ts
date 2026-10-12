@@ -1,3 +1,10 @@
+export interface MarketPrice {
+  market: string;
+  division: string;
+  min: number;
+  max: number;
+}
+
 export interface PriceItem {
   id: number;
   slug: string;
@@ -15,4 +22,5 @@ export interface PriceItem {
     dir: "up" | "down" | "same";
     pct: number;
   };
+  markets: MarketPrice[];
 }

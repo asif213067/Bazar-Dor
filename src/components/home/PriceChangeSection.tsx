@@ -1,5 +1,4 @@
-
-import { PriceItem } from "@/type/marqueeItems.type";
+import { PriceItem } from "@/type/priceItems.type";
 import ProductPriceCard from "./ProductPriceCard";
 
 interface PriceChangeSectionProps {
@@ -35,18 +34,13 @@ const PriceChangeSection = ({
       {products.length > 0 ? (
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {products.map((product) => (
-            <ProductPriceCard
-              key={product.id}
-              product={product}
-            />
+            <ProductPriceCard key={product.id} product={product} />
           ))}
         </div>
       ) : (
         <div className="rounded-xl border border-dashed border-[#dfe8df] bg-[#fbfdfb] px-4 py-6 text-center">
           <p className="text-sm text-gray-500">
-            {isUp
-              ? "আজ কোনো পণ্যের দাম বাড়েনি।"
-              : "আজ কোনো পণ্যের দাম কমেনি।"}
+            {isUp ? "আজ কোনো পণ্যের দাম বাড়েনি।" : "আজ কোনো পণ্যের দাম কমেনি।"}
           </p>
         </div>
       )}

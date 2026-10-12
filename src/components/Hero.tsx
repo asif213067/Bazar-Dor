@@ -5,7 +5,7 @@ import TodayDate from "@/components/header/TodayDate";
 
 const Hero = () => {
   return (
-    <section className="mt-2 w-full px-1.25">
+    <section className="mt-4 w-full px-1.25">
       {/* Banner */}
       <div className="mx-auto max-w-250 overflow-hidden rounded-[22px] border border-[#dfe8df] bg-[#fbfdfb]">
         <div className="mx-auto flex min-h-59.5 max-w-5xl items-center justify-between gap-4 px-4 py-5 sm:px-6">
