@@ -67,32 +67,72 @@ const SignUpPage: React.FC = () => {
     }
   };
 
+  const handleGoogleSignUp = async () => {
+    try {
+      toast.info("Redirecting to Google...");
+      const { error } = await authClient.signIn.social({
+        provider: "google",
+      });
+
+      if (error) {
+        toast.error(
+          error.message || "Google sign-up failed. Please try again.",
+        );
+      }
+    } catch {
+      toast.error("Google sign-up failed. Please try again.");
+    }
+  };
+
+  const handleGithubSignUp = async () => {
+    try {
+      toast.info("Redirecting to GitHub...");
+      const { error } = await authClient.signIn.social({
+        provider: "github",
+      });
+
+      if (error) {
+        toast.error(
+          error.message || "GitHub sign-up failed. Please try again.",
+        );
+      }
+    } catch {
+      toast.error("GitHub sign-up failed. Please try again.");
+    }
+  };
+
   return (
-    <div className="flex min-h-screen w-full flex-col items-center justify-center bg-[#f1f5f1] px-4 font-sans text-[#202820]">
-      <main className="w-full max-w-71.5">
-        {/* Heading */}
-        <div className="mb-4 text-center">
-          <h1 className="text-[18px] font-bold leading-7">
-            অ্যাকাউন্ট তৈরি করুন
-          </h1>
-
-          <p className="mt-0.5 whitespace-nowrap text-[10px] text-[#7b827b]">
-            বিনা খরচে সাইন আপ করে সব ফিচার ব্যবহার শুরু করুন।
-          </p>
-        </div>
-
-        {/* Sign-up Card */}
-        <div className="w-full rounded-xl border border-[#e2e9e2] bg-[#fafcf9] px-4 pb-4 pt-4">
-          <form onSubmit={handleSubmit} className="space-y-3">
-            {/* Name */}
+    <div className="flex min-h-screen w-full flex-col items-center justify-center bg-[#f1f5f1] px-4 py-8 font-sans text-[#202820] sm:px-6 sm:py-10">
+      {" "}
+      <main className="w-full max-w-sm sm:max-w-md">
+        {" "}
+        {/* Heading */}{" "}
+        <div className="mb-5 text-center">
+          {" "}
+          <h1 className="text-xl font-bold leading-8 sm:text-2xl">
+            {" "}
+            অ্যাকাউন্ট তৈরি করুন{" "}
+          </h1>{" "}
+          <p className="mt-1 text-xs leading-5 text-[#7b827b] sm:text-sm">
+            {" "}
+            বিনা খরচে সাইন আপ করে সব ফিচার ব্যবহার শুরু করুন।{" "}
+          </p>{" "}
+        </div>{" "}
+        {/* Sign-up Card */}{" "}
+        <div className="w-full rounded-xl border border-[#e2e9e2] bg-[#fafcf9] px-4 pb-5 pt-5 sm:px-6">
+          {" "}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {" "}
+            {/* Name */}{" "}
             <div>
+              {" "}
               <label
                 htmlFor="name"
-                className="mb-1 block text-[12px] font-medium"
+                className="mb-1.5 block text-xs font-medium sm:text-sm"
               >
-                নাম
-              </label>
-
+                {" "}
+                নাম{" "}
+              </label>{" "}
               <input
                 id="name"
                 name="name"
@@ -100,18 +140,19 @@ const SignUpPage: React.FC = () => {
                 placeholder="Your Name"
                 autoComplete="name"
                 required
-                className="h-7 w-full rounded-md border border-[#e3e9e3] bg-transparent px-2 text-[12px] outline-none transition focus:border-green-600 focus:ring-1 focus:ring-green-100"
-              />
-            </div>
-            {/* Email */}
+                className="h-9 w-full rounded-md border border-[#e3e9e3] bg-transparent px-3 text-sm outline-none transition focus:border-green-600 focus:ring-1 focus:ring-green-100 sm:h-10"
+              />{" "}
+            </div>{" "}
+            {/* Email */}{" "}
             <div>
+              {" "}
               <label
                 htmlFor="email"
-                className="mb-1 block text-[12px] font-medium"
+                className="mb-1.5 block text-xs font-medium sm:text-sm"
               >
-                ইমেইল
-              </label>
-
+                {" "}
+                ইমেইল{" "}
+              </label>{" "}
               <input
                 id="email"
                 name="email"
@@ -119,15 +160,15 @@ const SignUpPage: React.FC = () => {
                 placeholder="you@example.com"
                 autoComplete="email"
                 required
-                className="h-7 w-full rounded-md border border-[#e3e9e3] bg-transparent px-2 text-[12px] outline-none transition focus:border-green-600 focus:ring-1 focus:ring-green-100"
-              />
-            </div>
+                className="h-9 w-full rounded-md border border-[#e3e9e3] bg-transparent px-3 text-sm outline-none transition focus:border-green-600 focus:ring-1 focus:ring-green-100 sm:h-10"
+              />{" "}
+            </div>{" "}
             {/* Password */}{" "}
             <div>
               {" "}
               <label
                 htmlFor="password"
-                className="mb-1 block text-[12px] font-medium"
+                className="mb-1.5 block text-xs font-medium sm:text-sm"
               >
                 {" "}
                 পাসওয়ার্ড{" "}
@@ -144,33 +185,35 @@ const SignUpPage: React.FC = () => {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="h-7 w-full rounded-md border border-[#e3e9e3] bg-transparent px-2 pr-8 text-[11px] outline-none transition focus:border-green-600 focus:ring-1 focus:ring-green-100"
+                  className="h-9 w-full rounded-md border border-[#e3e9e3] bg-transparent px-3 pr-9 text-xs outline-none transition focus:border-green-600 focus:ring-1 focus:ring-green-100 sm:h-10 sm:text-sm"
                 />{" "}
                 <button
                   type="button"
                   onClick={() => setShowPassword((prev) => !prev)}
                   aria-label={showPassword ? "Hide password" : "Show password"}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-[#858b85] hover:text-[#07883f]"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#858b85] hover:text-[#07883f]"
                 >
                   {" "}
                   {showPassword ? (
-                    <FaEyeSlash size={12} />
+                    <FaEyeSlash size={15} />
                   ) : (
-                    <FaEye size={12} />
+                    <FaEye size={15} />
                   )}{" "}
                 </button>{" "}
               </div>{" "}
-            </div>
-            {/* Confirm Password */}
+            </div>{" "}
+            {/* Confirm Password */}{" "}
             <div>
+              {" "}
               <label
                 htmlFor="confirmPassword"
-                className="mb-1 block text-[12px] font-medium"
+                className="mb-1.5 block text-xs font-medium sm:text-sm"
               >
-                পাসওয়ার্ড নিশ্চিত করুন
-              </label>
-
+                {" "}
+                পাসওয়ার্ড নিশ্চিত করুন{" "}
+              </label>{" "}
               <div className="relative">
+                {" "}
                 <input
                   id="confirmPassword"
                   name="confirmPassword"
@@ -179,9 +222,8 @@ const SignUpPage: React.FC = () => {
                   autoComplete="new-password"
                   minLength={8}
                   required
-                  className="h-7 w-full rounded-md border border-[#e3e9e3] bg-transparent px-2 pr-8 text-[12px] outline-none transition focus:border-green-600 focus:ring-1 focus:ring-green-100"
-                />
-
+                  className="h-9 w-full rounded-md border border-[#e3e9e3] bg-transparent px-3 pr-9 text-sm outline-none transition focus:border-green-600 focus:ring-1 focus:ring-green-100 sm:h-10"
+                />{" "}
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword((prev) => !prev)}
@@ -190,75 +232,80 @@ const SignUpPage: React.FC = () => {
                       ? "Hide confirm password"
                       : "Show confirm password"
                   }
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-[#858b85] hover:text-[#07883f]"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#858b85] hover:text-[#07883f]"
                 >
+                  {" "}
                   {showConfirmPassword ? (
-                    <FaEyeSlash size={12} />
+                    <FaEyeSlash size={15} />
                   ) : (
-                    <FaEye size={12} />
-                  )}
-                </button>
-              </div>
-            </div>
-            {/* Create Account Button */}
+                    <FaEye size={15} />
+                  )}{" "}
+                </button>{" "}
+              </div>{" "}
+            </div>{" "}
+            {/* Create Account Button */}{" "}
             <button
               type="submit"
-              className="h-7.25 w-full rounded-md bg-[#07883f] text-[12px] font-semibold text-white shadow-[0_2px_2px_rgba(0,0,0,0.25)] transition hover:bg-[#067737] active:translate-y-px"
+              className="h-9 w-full rounded-md bg-[#07883f] text-sm font-semibold text-white shadow-[0_2px_2px_rgba(0,0,0,0.25)] transition hover:bg-[#067737] active:translate-y-px sm:h-10"
             >
-              অ্যাকাউন্ট তৈরি করুন
-            </button>
-          </form>
-
-          {/* Divider */}
-          <div className="my-3 flex items-center gap-3">
-            <div className="h-px flex-1 bg-[#e0e6e0]" />
-
-            <span className="text-[12px] text-[#777e77]">অথবা</span>
-
-            <div className="h-px flex-1 bg-[#e0e6e0]" />
-          </div>
-
-          {/* Social Sign-up */}
-          <div className="grid grid-cols-2 gap-2">
+              {" "}
+              অ্যাকাউন্ট তৈরি করুন{" "}
+            </button>{" "}
+          </form>{" "}
+          {/* Divider */}{" "}
+          <div className="my-4 flex items-center gap-3">
+            {" "}
+            <div className="h-px flex-1 bg-[#e0e6e0]" />{" "}
+            <span className="text-xs text-[#777e77] sm:text-sm">অথবা</span>{" "}
+            <div className="h-px flex-1 bg-[#e0e6e0]" />{" "}
+          </div>{" "}
+          {/* Social Sign-up */}{" "}
+          <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+            {" "}
             <button
               type="button"
-              className="flex h-7.25 items-center justify-center gap-1 whitespace-nowrap rounded-md border border-[#e3e9e3] px-1 text-[9px] font-medium transition hover:bg-[#f1f5f1]"
+              onClick={handleGoogleSignUp}
+              className="flex min-h-9 items-center justify-center gap-1.5 rounded-md border border-[#e3e9e3] px-2 py-2 text-xs font-medium transition hover:bg-[#f1f5f1] sm:min-h-10 sm:text-sm"
             >
-              <FcGoogle className="shrink-0 text-[12px]" />
-              Google দিয়ে চালিয়ে যান
-            </button>
-
+              {" "}
+              <FcGoogle className="shrink-0 text-base" /> Google দিয়ে চালিয়ে
+              যান{" "}
+            </button>{" "}
             <button
               type="button"
-              className="flex h-7.25 items-center justify-center gap-1 whitespace-nowrap rounded-md border border-[#e3e9e3] px-1 text-[9px] font-medium transition hover:bg-[#f1f5f1]"
+              onClick={handleGithubSignUp}
+              className="flex min-h-9 items-center justify-center gap-1.5 rounded-md border border-[#e3e9e3] px-2 py-2 text-xs font-medium transition hover:bg-[#f1f5f1] sm:min-h-10 sm:text-sm"
             >
-              <FaGithub className="shrink-0 text-[12px]" />
-              GitHub দিয়ে চালিয়ে যান
-            </button>
-          </div>
-
-          {/* Sign-in Link */}
-          <p className="mt-3 text-center text-[12px] text-[#737b73]">
+              {" "}
+              <FaGithub className="shrink-0 text-base" /> GitHub দিয়ে চালিয়ে
+              যান{" "}
+            </button>{" "}
+          </div>{" "}
+          {/* Sign-in Link */}{" "}
+          <p className="mt-4 text-center text-xs leading-5 text-[#737b73] sm:text-sm">
+            {" "}
             অ্যাকাউন্ট আছে?{" "}
             <Link
               href="/signin"
               className="font-medium text-[#07883f] hover:underline"
             >
-              সাইন ইন করুন
-            </Link>
-          </p>
-        </div>
-
-        {/* Back to Home */}
-        <div className="mt-4 text-center">
+              {" "}
+              সাইন ইন করুন{" "}
+            </Link>{" "}
+          </p>{" "}
+        </div>{" "}
+        {/* Back to Home */}{" "}
+        <div className="mt-5 text-center">
+          {" "}
           <Link
             href="/"
-            className="text-[12px] text-[#8a918a] transition hover:text-[#07883f]"
+            className="text-xs text-[#8a918a] transition hover:text-[#07883f] sm:text-sm"
           >
-            ← হোম পেজে ফিরে যান
-          </Link>
-        </div>
-      </main>
+            {" "}
+            ← হোম পেজে ফিরে যান{" "}
+          </Link>{" "}
+        </div>{" "}
+      </main>{" "}
     </div>
   );
 };

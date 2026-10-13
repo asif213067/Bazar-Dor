@@ -6,10 +6,12 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { FaChevronDown, FaUser, FaSignOutAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const UserInfo = () => {
   const { data: session, isPending } = authClient.useSession();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const router = useRouter();
 
   const user = session?.user;
 
@@ -21,6 +23,10 @@ const UserInfo = () => {
     } catch {
       toast.error("Sign-out failed. Please try again.");
     }
+
+    router.push("/");
+    router.refresh();
+    
   };
 
   // Prevent showing Sign In / Sign Up while checking the session

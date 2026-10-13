@@ -1,22 +1,44 @@
+"use client";
+
 import { PriceItem } from "@/type/priceItems.type";
-import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 interface ProductPriceCardProps {
   product: PriceItem;
 }
 
 const ProductPriceCard = ({ product }: ProductPriceCardProps) => {
+  const router = useRouter();
+  const { data: session, isPending } = authClient.useSession();
+
   const isUp = product.change.dir === "up";
   const isDown = product.change.dir === "down";
 
+  const handleProductClick = () => {
+    if (isPending) return;
+
+    const productUrl = `/products/${product.slug}`;
+
+    if (!session?.user) {
+      router.push(
+        `/signin?callbackURL=${encodeURIComponent(productUrl)}`
+      );
+      return;
+    }
+
+    router.push(productUrl);
+  };
+
   return (
-    <Link
-      href={`/products/${product.slug}`}
-      className="block rounded-[15px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+    <button
+      type="button"
+      onClick={handleProductClick}
+      disabled={isPending}
       aria-label={`${product.nameBn} - বিস্তারিত দেখুন`}
+      className="block h-full w-full rounded-[15px] text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 disabled:cursor-wait"
     >
       <article className="h-full rounded-[15px] border border-[#e0e8e1] bg-[#fbfdfb] p-3 transition-all duration-200 hover:-translate-y-1 hover:border-green-200 hover:shadow-md">
-        {/* Product information */}
         <div className="flex items-center gap-2.5">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#f0f5f0] text-[22px]">
             {product.image || product.categoryIcon}
@@ -33,12 +55,9 @@ const ProductPriceCard = ({ product }: ProductPriceCardProps) => {
           </div>
         </div>
 
-        {/* Price and change */}
         <div className="mt-2.5 flex items-end justify-between gap-2">
           <div>
-            <p className="text-[10px] text-[#737b74]">
-              আজকের দাম
-            </p>
+            <p className="text-[10px] text-[#737b74]">আজকের দাম</p>
 
             <p className="mt-0.5 text-[15px] font-extrabold leading-tight text-[#263128]">
               {product.today.toLocaleString("bn-BD")} টাকা
@@ -63,7 +82,7 @@ const ProductPriceCard = ({ product }: ProductPriceCardProps) => {
           </span>
         </div>
       </article>
-    </Link>
+    </button>
   );
 };
 
