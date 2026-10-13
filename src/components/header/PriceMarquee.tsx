@@ -5,7 +5,7 @@ import Marquee from "react-fast-marquee";
 const getPrices = async (): Promise<PriceItem[]> => {
   try {
     const res = await fetch(
-      "https://api.api-store.workers.dev/api/bazardor/products",
+      `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/bazardor/products`,
       {
         next: { revalidate: 60 },
       },

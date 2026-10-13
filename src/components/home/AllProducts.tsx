@@ -6,7 +6,7 @@ import type { SortOption } from "@/type/sort.type";
 import ProductPriceCard from "./ProductPriceCard";
 import SortControl from "@/components/SortControl";
 
-const API_URL = "https://api.api-store.workers.dev/api/bazardor/products";
+const API_URL = `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/bazardor/products`;
 
 export default function AllProducts() {
   const [products, setProducts] = useState<PriceItem[]>([]);

@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import type { PriceItem } from "@/type/priceItems.type";
 import ProductList from "@/components/ProductList";
 
-const API_URL = "https://api.api-store.workers.dev/api/bazardor/products";
+const API_URL = `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/bazardor/products`;
 
 async function getProducts(): Promise<PriceItem[]> {
   try {
