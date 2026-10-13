@@ -4,6 +4,7 @@ import React, { Suspense } from "react";
 import NavLinks from "./NavLinks";
 import TodayDate from "./TodayDate";
 import NavLinksSkeleton from "./NavLinksSkeleton";
+import UserInfo from "./UserInfo";
 
 const Navbar = () => {
 
@@ -33,21 +34,7 @@ const Navbar = () => {
           </Link>
 
           {/* Authentication Buttons */}
-          <div className="flex items-center gap-3">
-            <Link
-              href="/sign-in"
-              className="rounded-md px-2.5 py-1.5 text-[13px] font-medium text-gray-700 transition hover:text-green-700"
-            >
-              সাইন ইন
-            </Link>
-
-            <Link
-              href="/sign-up"
-              className="rounded-md bg-green-600 px-3 py-1.5 text-[13px] font-semibold text-white shadow-sm transition hover:bg-green-700 active:scale-95"
-            >
-              সাইন আপ
-            </Link>
-          </div>
+          <UserInfo />
         </div>
 
         {/* Bottom Navigation */}
