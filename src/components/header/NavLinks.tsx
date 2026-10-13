@@ -1,13 +1,15 @@
 import { NavItem } from "@/type/navItems.type";
 import CategoryNavLink from "./CategoryNavLink";
-
-
+import CategoryNavScroller from "./CategoryNavScroller";
 
 const getNavItems = async (): Promise<NavItem[]> => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/bazardor/categories`, {
-      next: { revalidate: 3600 },
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/bazardor/categories`,
+      {
+        next: { revalidate: 3600 },
+      },
+    );
 
     if (!res.ok) {
       throw new Error("Failed to fetch categories");
@@ -16,7 +18,7 @@ const getNavItems = async (): Promise<NavItem[]> => {
     const data = await res.json();
 
     return Array.isArray(data) ? data : (data.data ?? []);
-  } catch{
+  } catch {
     return [];
   }
 };
@@ -39,12 +41,12 @@ const NavLinks = async () => {
   }
 
   return (
-    <nav className="flex h-10 items-center gap-1 overflow-x-auto border-t border-gray-100 px-1 sm:gap-3 scrollbar-none [&::-webkit-scrollbar]:hidden">
+    <CategoryNavScroller>
       {navItems.map((item) => (
         <CategoryNavLink key={item.id} item={item} />
       ))}
-    </nav>
+    </CategoryNavScroller>
   );
-};;
+};
 
 export default NavLinks;
