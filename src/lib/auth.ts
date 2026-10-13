@@ -3,21 +3,21 @@ import { betterAuth } from "better-auth";
 import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "@better-auth/mongo-adapter";
 
-// const client = new MongoClient(process.env.MONGO_DB_URL as string);
-// const db = client.db("bazar-dor");
-
-const mongoUrl = process.env.MONGO_DB_URL;
-
-if (!mongoUrl) {
-  throw new Error("MONGO_DB_URL is not defined");
-}
-
-const client = new MongoClient(mongoUrl);
+const client = new MongoClient(process.env.MONGO_DB_URL as string);
 const db = client.db("bazar-dor");
 
-export { client, db };
+client
+  .connect()
+  .then(() => console.log("MongoDB connected successfully"))
+  .catch((error) => console.error("MongoDB connection failed:", error));
+
 
 export const auth = betterAuth({
+  trustedOrigins: [
+    "http://localhost:3000",
+    "https://bazar-dor-by-asif.vercel.app",
+  ],
+  
   database: mongodbAdapter(db, {
     client,
   }),
