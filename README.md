@@ -11,7 +11,7 @@ The platform provides an intuitive browsing experience with category-based navig
 ## 🌐 Live Demo & Repository
 
 - **Live Website:** https://bazar-dor-by-asif.vercel.app
-- **GitHub Repository:** https://github.com/Asif-Hosen/bazar-dor
+- **GitHub Repository:** https://github.com/asif213067/Bazar-Dor
 
 Explore the live application or visit the repository to review the source code, project structure, and implementation.
 
@@ -126,7 +126,7 @@ Make sure you have the following installed:
 **1. Clone the repository**
 
 ```bash
-git clone https://github.com/Asif-Hosen/bazar-dor.git
+https://github.com/asif213067/Bazar-Dor.git
 ```
 
 **2. Navigate to the project directory**
@@ -200,8 +200,8 @@ To deploy your own instance:
 
 **Asif Hosen**
 
-- GitHub: [@Asif-Hosen](https://github.com/Asif-Hosen)
-- Project Repository: [BazarDor](https://github.com/Asif-Hosen/bazar-dor)
+- GitHub: [@Asif-Hosen](https://github.com/asif213067)
+- Project Repository: [BazarDor](https://github.com/asif213067/Bazar-Dor)
 
 ---
 
