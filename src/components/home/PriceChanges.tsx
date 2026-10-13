@@ -33,10 +33,12 @@ const PriceChanges = async () => {
 
   const decreasedProducts = products
     .filter((product) => product.change?.dir === "down")
+    .sort((a, b) => (a.change?.pct ?? 0) - (b.change?.pct ?? 0))
     .slice(0, 6);
 
   const increasedProducts = products
     .filter((product) => product.change?.dir === "up")
+    .sort((a, b) => (b.change?.pct ?? 0) - (a.change?.pct ?? 0))
     .slice(0, 6);
 
   if (products.length === 0) {
